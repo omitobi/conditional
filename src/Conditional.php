@@ -15,6 +15,8 @@ class Conditional
 
     private static bool $thenCalled = false;
 
+    private static $finalValue;
+
     public static function if($condition)
     {
         static::$conditionsExists = true;
@@ -47,19 +49,10 @@ class Conditional
             );
         }
 
-        if (!$action instanceof Closure) {
-            return $action;
-        }
-
         return $this->then($action);
     }
 
-    private function toggleTruthy()
-    {
-        static::$truthy = !static::$truthy;
-    }
-
-    public function then(Closure $action)
+    public function then($action)
     {
         if (!static::$conditionsExists || !static::$ifExists) {
             throw new InvalidConditionOrderException(
@@ -67,14 +60,28 @@ class Conditional
             );
         }
 
+        if (!$action instanceof Closure) {
+            $action = fn() => $action;
+        }
+
+        if (static::$truthy) {
+            static::$finalValue = $action();
+        }
+
         static::$thenCalled = true;
 
         static::$conditionsExists = false;
 
-        if (static::$truthy) {
-            $action();
-        }
-
         return $this;
+    }
+
+    private function toggleTruthy()
+    {
+        static::$truthy = !static::$truthy;
+    }
+
+    public function value()
+    {
+        return static::$finalValue;
     }
 }
