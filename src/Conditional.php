@@ -22,34 +22,43 @@ class Conditional
 
     private static bool $elseCalled = false;
 
+    private static bool $elseIfCalled = false;
+
     private static $finalValue;
 
     public static function if($condition)
     {
+        //todo.flash if should not be callable once any other condition is called
+
+        self::setTruthy($condition);
+
         self::$conditionsExists = true;
 
         self::$ifCalled = true;
 
+        return new static;
+    }
+
+    public static function setTruthy($condition)
+    {
         if (!$condition instanceof Closure) {
             self::$truthy = (bool)$condition;
         } else {
             self::$truthy = (bool)$condition();
         }
-
-        return new static;
     }
 
     public function else($action)
     {
-        self::$conditionsExists = true;
-
-        $this->toggleTruthy();
-
         if (!self::$thenCalled) {
             throw new InvalidConditionOrderException(
                 'you need to call then() condition before calling else()'
             );
         }
+
+        $this->toggleTruthy();
+
+        self::$conditionsExists = true;
 
         self::$elseCalled = true;
 
@@ -58,11 +67,13 @@ class Conditional
 
     public function then($action)
     {
-        if (!self::$conditionsExists || !self::$ifCalled) {
+        if (!$this->allowThen()) {
             throw new InvalidConditionOrderException(
                 'you need to make at least one condition before calling then()'
             );
         }
+
+        self::$conditionsExists = false;
 
         if (!$this->canBeCalled($action)) {
             $action = fn() => $action;
@@ -87,11 +98,24 @@ class Conditional
                 'you need to call then() condition before calling elseIf'
             );
         }
+
+        self::setTruthy($condition);
+
+        self::$conditionsExists = true;
+
+        self::$elseIfCalled = true;
+
+        return $this;
     }
 
     public function value()
     {
         return self::$finalValue;
+    }
+
+    private function allowThen()
+    {
+        return self::$conditionsExists && (self::$ifCalled || self::$elseIfCalled);
     }
 
     protected function canBeCalled($value)
@@ -114,6 +138,7 @@ class Conditional
         self::$ifCalled = false;
         self::$thenCalled = false;
         self::$elseCalled = false;
+        self::$elseIfCalled = false;
         self::$finalValue = null;
     }
 }
