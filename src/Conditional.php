@@ -75,13 +75,13 @@ class Conditional
         return $this;
     }
 
-    private function toggleTruthy()
-    {
-        static::$truthy = !static::$truthy;
-    }
-
     public function value()
     {
         return static::$finalValue;
+    }
+
+    private function toggleTruthy()
+    {
+        static::$truthy = !static::$truthy;
     }
 }

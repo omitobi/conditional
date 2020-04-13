@@ -2,6 +2,7 @@
 
 namespace Conditional\Tests;
 
+use Closure;
 use Conditional\Conditional;
 use PHPUnit\Framework\TestCase;
 
@@ -30,6 +31,16 @@ class ConditionalTest extends TestCase
             ->value();
 
         $this->assertEquals($value, $result);
+    }
+
+    public function testGetFunctionValue()
+    {
+        $result = Conditional::if(fn() => true)
+            ->then(fn() => fn() => 'fn 1')
+            ->else(fn() => fn() => 'fn 2')
+            ->value();
+
+        $this->assertInstanceOf(Closure::class, $result);
     }
 }
 
