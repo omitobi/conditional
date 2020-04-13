@@ -8,6 +8,11 @@ use PHPUnit\Framework\TestCase;
 
 class ConditionalTest extends TestCase
 {
+    public function testConditionalHelper()
+    {
+        $this->assertEquals(Conditional::if(true), conditional(true));
+    }
+
     public function testExecutionFollowsConditions()
     {
         $firstResponse = 1;
