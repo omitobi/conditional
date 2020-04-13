@@ -80,22 +80,24 @@ $value = Conditional::if(fn() => 'a' === 1) // or conditional(fn() => 'a' == 1)
 //do something with $value
 ```
 
-Finally, `then()`  and `else()` methods accepts invocable class or objects. Lets see:
+Finally, `then()`  and `else()` methods accepts invokable class or objects. Lets see:
 
 ```php
 use Conditional\Conditional;
 
-class Invocable {
-    public function __invoke(){
+class Invokable {
+
+    public function __invoke()
+    {
         return 'I was Invoked';
     }
 }
 
-$invocableClass = new Invocable();
+$invokableClass = new Invokable();
 
 $value = Conditional::if(fn() => 'a' === 1) // or conditional(fn() => 1 + 1)
     ->then(1)
-    ->else($invocableClass) // 
+    ->else($invokableClass) // 
     ->value(); //Value returns 'I was Invoked'
 
 // Do something with $value
@@ -107,8 +109,14 @@ $value = Conditional::if(fn() => 'a' === 1) // or conditional(fn() => 1 + 1)
 
 ```php
 conditional(isset($data))
+
     ->then(fn() => doThis())
-    ->else(fn() => doThat());
+
+    ->elseIf(is_int(1))
+
+    ->then(fn() => doThat())
+
+    ->else(2);
 ```
 
 ## Contributions
