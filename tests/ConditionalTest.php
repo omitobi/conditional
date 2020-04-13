@@ -42,6 +42,24 @@ class ConditionalTest extends TestCase
 
         $this->assertInstanceOf(Closure::class, $result);
     }
+
+    public function testInvocableClassValue()
+    {
+        $invocable = new class {
+
+            public function __invoke($value = '')
+            {
+                return $value ?: 'Invocable';
+            }
+        };
+
+        $result = Conditional::if($invocable() === 'Invocable')
+            ->then($invocable)
+            ->else($invocable(1))
+            ->value();
+
+        $this->assertEquals(true, is_string($result));
+    }
 }
 
 if (!function_exists('dump')) {

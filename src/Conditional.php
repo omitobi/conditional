@@ -60,7 +60,7 @@ class Conditional
             );
         }
 
-        if (!$action instanceof Closure) {
+        if (!$this->canBeCalled($action)) {
             $action = fn() => $action;
         }
 
@@ -78,6 +78,14 @@ class Conditional
     public function value()
     {
         return static::$finalValue;
+    }
+
+    protected function canBeCalled($value)
+    {
+        return (
+            (is_object($value) && method_exists($value, '__invoke')) ||
+            ($value instanceof Closure)
+        );
     }
 
     private function toggleTruthy()
