@@ -22,7 +22,7 @@ class ConditionalTest extends TestCase
 
         $this->expectException(InvalidConditionOrderException::class);
 
-        $this->expectExceptionMessage('you need to make another condition before calling then()');
+        $this->expectExceptionMessage('you need to make at least one condition before calling then()');
 
         $conditional1->then(fn() => $conditional->then(1));
         $conditional1->then(fn() => $conditional->else(2));

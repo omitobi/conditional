@@ -45,7 +45,7 @@ class Conditional
 
         if (!self::$thenCalled) {
             throw new InvalidConditionOrderException(
-                'you need to call then() condition before calling else()'
+                'you need to make at least one condition before calling then()'
             );
         }
 
