@@ -5,12 +5,26 @@ namespace Conditional\Tests;
 use Closure;
 use Conditional\Conditional;
 use PHPUnit\Framework\TestCase;
+use Conditional\Exceptions\InvalidConditionOrderException;
 
 class ConditionalTest extends TestCase
 {
     public function testConditionalHelper()
     {
         $this->assertEquals(Conditional::if(true), conditional(true));
+    }
+
+    public function testInstanceOfConditionalNeedsIfStatementBeforeOtherStatement()
+    {
+        Conditional::if(true);
+
+        $conditional = new Conditional();
+
+//        $this->expectException(InvalidConditionOrderException::class);
+
+        $conditional->then(1);
+//        $conditional->else(1);
+
     }
 
     public function testExecutionFollowsConditions()
