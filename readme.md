@@ -1,5 +1,5 @@
 <p align="center">
-<pre><img src="https://github.com/omitobi/assets/blob/master/conditional-assets/twitter_header_photo_2.png"></pre>
+<img src="https://github.com/omitobi/assets/blob/master/conditional-assets/twitter_header_photo_2.png">
 </p>
 
 <p align="center">
