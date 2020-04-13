@@ -5,6 +5,11 @@ namespace Conditional;
 use Closure;
 use Conditional\Exceptions\InvalidConditionOrderException;
 
+/**
+ * Class Conditional
+ * @package Conditional
+ *
+ */
 class Conditional
 {
     private static bool $truthy = false;
@@ -14,6 +19,8 @@ class Conditional
     private static bool $ifCalled = false;
 
     private static bool $thenCalled = false;
+
+    private static bool $elseCalled = false;
 
     private static $finalValue;
 
@@ -32,11 +39,6 @@ class Conditional
         return new static;
     }
 
-    public function elseIf()
-    {
-        //todo.addition
-    }
-
     public function else($action)
     {
         self::$conditionsExists = true;
@@ -48,6 +50,8 @@ class Conditional
                 'you need to call then() condition before calling else()'
             );
         }
+
+        self::$elseCalled = true;
 
         return $this->then($action);
     }
@@ -75,6 +79,16 @@ class Conditional
         return $this;
     }
 
+
+    public function elseIf($condition)
+    {
+        if (! self::$thenCalled) {
+            throw new InvalidConditionOrderException(
+                'you need to call then() condition before calling elseIf'
+            );
+        }
+    }
+
     public function value()
     {
         return self::$finalValue;
@@ -99,6 +113,7 @@ class Conditional
         self::$conditionsExists = false;
         self::$ifCalled = false;
         self::$thenCalled = false;
+        self::$elseCalled = false;
         self::$finalValue = null;
     }
 }
