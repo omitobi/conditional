@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class ConditionalTest extends TestCase
 {
-
     public function testExecutionFollowsConditions()
     {
         $firstResponse = 1;
@@ -16,6 +15,21 @@ class ConditionalTest extends TestCase
         Conditional::if($firstResponse === $secondResponse)
             ->then(fn() => $this->assertEquals($firstResponse, $secondResponse))
             ->else(fn() => $this->assertNotEquals($firstResponse, $secondResponse));
+    }
+
+    public function testThatValueIsReceived()
+    {
+        $firstResponse = 1;
+        $secondResponse = 2;
+
+        $value = rand(1,2);
+
+        $result = Conditional::if($value === $firstResponse)
+            ->then($firstResponse)
+            ->else($secondResponse)
+            ->value();
+
+        $this->assertEquals($value, $result);
     }
 }
 
