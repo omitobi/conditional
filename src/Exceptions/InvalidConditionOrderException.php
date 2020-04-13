@@ -1,6 +1,6 @@
 <?php
 
-namespace Conditional\Conditional\Exceptions;
+namespace Conditional\Exceptions;
 
 class InvalidConditionOrderException extends \RuntimeException
 {

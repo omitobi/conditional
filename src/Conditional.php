@@ -3,7 +3,7 @@
 namespace Conditional;
 
 use Closure;
-use Conditional\Conditional\Exceptions\InvalidConditionOrderException;
+use Conditional\Exceptions\InvalidConditionOrderException;
 
 class Conditional
 {
@@ -11,7 +11,7 @@ class Conditional
 
     private static bool $conditionsExists = false;
 
-    private static bool $ifExists = false;
+    private static bool $ifCalled = false;
 
     private static bool $thenCalled = false;
 
@@ -19,14 +19,14 @@ class Conditional
 
     public static function if($condition)
     {
-        static::$conditionsExists = true;
+        self::$conditionsExists = true;
 
-        static::$ifExists = true;
+        self::$ifCalled = true;
 
         if (!$condition instanceof Closure) {
-            static::$truthy = (bool)$condition;
+            self::$truthy = (bool)$condition;
         } else {
-            static::$truthy = (bool)$condition();
+            self::$truthy = (bool)$condition();
         }
 
         return new static;
@@ -39,11 +39,11 @@ class Conditional
 
     public function else($action)
     {
-        static::$conditionsExists = true;
+        self::$conditionsExists = true;
 
         $this->toggleTruthy();
 
-        if (!static::$thenCalled) {
+        if (!self::$thenCalled) {
             throw new InvalidConditionOrderException(
                 'you need to call then() condition before calling else()'
             );
@@ -54,7 +54,7 @@ class Conditional
 
     public function then($action)
     {
-        if (!static::$conditionsExists || !static::$ifExists) {
+        if (!self::$conditionsExists || !self::$ifCalled) {
             throw new InvalidConditionOrderException(
                 'you need to make another condition before calling then()'
             );
@@ -64,20 +64,20 @@ class Conditional
             $action = fn() => $action;
         }
 
-        if (static::$truthy) {
-            static::$finalValue = $action();
+        if (self::$truthy) {
+            self::$finalValue = $action();
         }
 
-        static::$thenCalled = true;
+        self::$thenCalled = true;
 
-        static::$conditionsExists = false;
+        self::$conditionsExists = false;
 
         return $this;
     }
 
     public function value()
     {
-        return static::$finalValue;
+        return self::$finalValue;
     }
 
     protected function canBeCalled($value)
@@ -90,6 +90,15 @@ class Conditional
 
     private function toggleTruthy()
     {
-        static::$truthy = !static::$truthy;
+        self::$truthy = !self::$truthy;
+    }
+
+    public function __destruct()
+    {
+        self::$truthy = false;
+        self::$conditionsExists = false;
+        self::$ifCalled = false;
+        self::$thenCalled = false;
+        self::$finalValue = null;
     }
 }
