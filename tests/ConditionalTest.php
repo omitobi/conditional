@@ -5,9 +5,29 @@ namespace Conditional\Tests;
 use Closure;
 use Conditional\Conditional;
 use PHPUnit\Framework\TestCase;
+use Conditional\Exceptions\InvalidConditionOrderException;
 
 class ConditionalTest extends TestCase
 {
+    public function testConditionalHelper()
+    {
+        $this->assertEquals(Conditional::if(true), conditional(true));
+    }
+
+    public function testInstanceOfConditionalNeedsIfStatementBeforeOtherStatement()
+    {
+        $conditional1 = Conditional::if((rand(2, 3) % 2) === 1);
+
+        $conditional = new Conditional();
+
+        $this->expectException(InvalidConditionOrderException::class);
+
+        $this->expectExceptionMessage('you need to make at least one condition before calling then()');
+
+        $conditional1->then(fn() => $conditional->then(1));
+        $conditional1->then(fn() => $conditional->else(2));
+    }
+
     public function testExecutionFollowsConditions()
     {
         $firstResponse = 1;
@@ -23,7 +43,7 @@ class ConditionalTest extends TestCase
         $firstResponse = 1;
         $secondResponse = 2;
 
-        $value = rand(1,2);
+        $value = rand(1, 2);
 
         $result = Conditional::if($value === $firstResponse)
             ->then($firstResponse)

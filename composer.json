@@ -27,7 +27,10 @@
   "autoload": {
     "psr-4": {
       "Conditional\\": "src"
-    }
+    },
+    "files": [
+      "Helpers/helpers.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
