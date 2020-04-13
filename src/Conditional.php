@@ -3,7 +3,7 @@
 namespace Conditional;
 
 use Closure;
-use \Exception as MissingMandatoryParametersException;
+use Conditional\Conditional\Exceptions\InvalidConditionOrderException;
 
 class Conditional
 {
@@ -32,7 +32,7 @@ class Conditional
 
     public function elseIf()
     {
-
+        //todo.addition
     }
 
     public function else($action)
@@ -41,8 +41,8 @@ class Conditional
 
         $this->toggleTruthy();
 
-        if (! static::$thenCalled) {
-            throw new MissingMandatoryParametersException(
+        if (!static::$thenCalled) {
+            throw new InvalidConditionOrderException(
                 'you need to call then() condition before calling else()'
             );
         }
@@ -62,18 +62,18 @@ class Conditional
     public function then(Closure $action)
     {
         if (!static::$conditionsExists || !static::$ifExists) {
-            throw new MissingMandatoryParametersException(
+            throw new InvalidConditionOrderException(
                 'you need to make another condition before calling then()'
             );
-        }
-
-        if (static::$truthy) {
-            $action();
         }
 
         static::$thenCalled = true;
 
         static::$conditionsExists = false;
+
+        if (static::$truthy) {
+            $action();
+        }
 
         return $this;
     }

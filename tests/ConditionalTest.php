@@ -8,18 +8,20 @@ use PHPUnit\Framework\TestCase;
 class ConditionalTest extends TestCase
 {
 
-    public function testIfStatement()
+    public function testExecutionFollowsConditions()
     {
-        Conditional::if(function () {
-            return '1';
-        })
-            ->then(fn() => dump('Yay'))
-            ->else(fn() => dump(['aa']));
+        $firstResponse = 1;
+        $secondResponse = 2;
+
+        Conditional::if($firstResponse === $secondResponse)
+            ->then(fn() => $this->assertEquals($firstResponse, $secondResponse))
+            ->else(fn() => $this->assertNotEquals($firstResponse, $secondResponse));
     }
 }
 
-if (! function_exists('dump')) {
-    function dump($expression, $_ = null) {
-        var_dump($expression, $_);
+if (!function_exists('dump')) {
+    function dump(...$expression)
+    {
+        var_dump($expression);
     }
 }
