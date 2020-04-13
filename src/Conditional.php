@@ -26,6 +26,8 @@ class Conditional
 
     private static $finalValue;
 
+    private static $finalValueChanged = null;
+
     public static function if($condition)
     {
         //todo.flash if should not be callable once any other condition is called
@@ -81,6 +83,7 @@ class Conditional
 
         if (self::$truthy) {
             self::$finalValue = $action();
+            self::$finalValueChanged = true;
         }
 
         self::$thenCalled = true;
@@ -99,9 +102,15 @@ class Conditional
             );
         }
 
-        self::setTruthy($condition);
-
         self::$conditionsExists = true;
+
+        if (self::$truthy) {
+            $this->toggleTruthy();
+
+            return $this;
+        }
+
+        self::setTruthy($condition);
 
         self::$elseIfCalled = true;
 
@@ -140,5 +149,6 @@ class Conditional
         self::$elseCalled = false;
         self::$elseIfCalled = false;
         self::$finalValue = null;
+        self::$finalValueChanged = null;
     }
 }
