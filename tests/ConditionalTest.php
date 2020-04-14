@@ -14,18 +14,26 @@ class ConditionalTest extends TestCase
         $this->assertEquals(Conditional::if(true), conditional(true));
     }
 
-    public function testInstanceOfConditionalNeedsIfStatementBeforeOtherStatement()
+    public function testThenCannotBeCalledBeforeIf()
     {
-        $conditional1 = Conditional::if((rand(2, 3) % 2) === 1);
-
         $conditional = new Conditional();
 
         $this->expectException(InvalidConditionOrderException::class);
 
-        $this->expectExceptionMessage('you need to make at least one condition before calling then()');
+        $this->expectExceptionMessage('A condition must be called before calling then()');
 
-        $conditional1->then(fn() => $conditional->then(1));
-        $conditional1->then(fn() => $conditional->else(2));
+        $conditional->then(1);
+    }
+
+    public function testElseCannotBeCalledBeforeThen()
+    {
+        $conditional = new Conditional();
+
+        $this->expectException(InvalidConditionOrderException::class);
+
+        $this->expectExceptionMessage('then() must be called before calling else()');
+
+        $conditional->else(2);
     }
 
     public function testExecutionFollowsConditions()
