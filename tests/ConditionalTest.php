@@ -80,11 +80,14 @@ class ConditionalTest extends TestCase
 
         $this->assertEquals(true, is_string($result));
     }
-}
 
-if (!function_exists('dump')) {
-    function dump(...$expression)
+    private function dump(...$expression)
     {
         var_dump($expression);
+    }
+
+    private function dd()
+    {
+        die($this->dump(...func_get_args()));
     }
 }
