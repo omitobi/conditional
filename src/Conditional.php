@@ -32,11 +32,6 @@ class Conditional
         return new static;
     }
 
-    public function elseIf()
-    {
-        //todo.addition
-    }
-
     public function else($action)
     {
         self::$conditionsExists = true;
