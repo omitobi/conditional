@@ -73,12 +73,17 @@ class ConditionalTest extends TestCase
             }
         };
 
-        $result = Conditional::if($invocable() === 'Invocable')
+        $result1 = Conditional::if($invocable() === 'Invocable')
             ->then($invocable)
             ->else($invocable(1))
             ->value();
 
-        $this->assertEquals(true, is_string($result));
+        $result2 = Conditional::if($invocable() === 'Invocable')
+            ->then(new Invocable())
+            ->value();
+
+        $this->assertEquals(true, is_string($result1));
+        $this->assertEquals(true, is_int($result2));
     }
 
     private function dump(...$expression)
@@ -90,4 +95,13 @@ class ConditionalTest extends TestCase
     {
         die($this->dump(...func_get_args()));
     }
+}
+
+class Invocable {
+
+    public function __invoke($value = '')
+    {
+        return $value ?: 1;
+    }
+
 }
