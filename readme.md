@@ -15,6 +15,8 @@ A fluent helper for object-oriented style of if-else statements.
 
 It helps you construct conditionals as you speak it object Oriented way.
 
+> Some use cases are not yet covered so you can default to `if() else {}` statement.
+
 ## Installation
 
 Using composer:
