@@ -105,7 +105,7 @@ $value = Conditional::if(fn() => 'a' === 1) // or conditional(fn() => 1 + 1)
 
 ### Coming soon
 
-`elseIf()` method of conditionals like so:
+`elseIf()` method of Conditional like so:
 
 ```php
 conditional(isset($data))
@@ -131,7 +131,7 @@ For new feature, checkout with prefix `feature` e.g `feature/add-auto-deloy`
 
 - Clone this repository
 - run `sh dockerizer.sh` or `bash dockerizer.sh`
-- execute into the docker environment with `docker-compose exec core sh` (`sh` can be another bash)
+- execute into the docker environment with `docker-compose exec conditional sh` (`sh` can be another bash)
 - run tests with `vendor/bin/phpunit`
 
 ## Licence
