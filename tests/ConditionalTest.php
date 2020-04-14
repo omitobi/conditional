@@ -63,9 +63,9 @@ class ConditionalTest extends TestCase
         $this->assertInstanceOf(Closure::class, $result);
     }
 
-    public function testInvocableClassValue()
+    public function testInvokableClassValue()
     {
-        $invocable = new class {
+        $invokable = new class {
 
             public function __invoke($value = '')
             {
@@ -73,13 +73,13 @@ class ConditionalTest extends TestCase
             }
         };
 
-        $result1 = Conditional::if($invocable() === 'Invocable')
-            ->then($invocable)
-            ->else($invocable(1))
+        $result1 = Conditional::if($invokable() === 'Invocable')
+            ->then($invokable)
+            ->else($invokable(1))
             ->value();
 
-        $result2 = Conditional::if($invocable() === 'Invocable')
-            ->then(new Invocable())
+        $result2 = Conditional::if(strlen('abcd') === 4)
+            ->then(new Invokable())
             ->value();
 
         $this->assertEquals(true, is_string($result1));
@@ -97,7 +97,7 @@ class ConditionalTest extends TestCase
     }
 }
 
-class Invocable {
+class Invokable {
 
     public function __invoke($value = '')
     {
