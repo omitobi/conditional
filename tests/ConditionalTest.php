@@ -94,6 +94,19 @@ class ConditionalTest extends TestCase
         $this->assertEquals(true, is_int($result2));
     }
 
+    public function testEveryIfCallCreatesNewFreshInstance()
+    {
+        $conditional = new Conditional();
+
+        $instanceOne = $conditional->if(false);
+        $instanceTwo = $conditional->if(false);
+
+        $this->assertInstanceOf(Conditional::class, $instanceOne);
+        $this->assertInstanceOf(Conditional::class, $instanceTwo);
+
+        $this->assertNotSame($instanceOne, $instanceTwo);
+    }
+
     private function dump(...$expression)
     {
         var_dump($expression);
