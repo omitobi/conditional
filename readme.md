@@ -11,7 +11,7 @@
 </p>
 
 ## About Conditional
-A fluent helper for object-oriented style of if-else statements.
+A (optional but) fluent helper for object-oriented style of if-else statements.
 
 It helps you construct conditionals as you speak it object Oriented way.
 
@@ -121,16 +121,38 @@ conditional(isset($data))
     ->else(2);
 ```
 
+## Caveats (or Awareness)
+
+- As at version v1.0, Calling `if()` method returns an instance of Condtional, so do not call it twice on the same instance for example:
+
+```php
+// This is Wrong!
+
+Conditional::if(true)
+    ->then(1)
+    ->else(2)
+    ->if('1'); // Don't do it except you intend to start a new and fresh if Conditional
+```
+> See: tests/ConditionalTest::testEveryIfCallCreatesNewFreshInstance test. On the last line of that test, the two conditionals are not the same.
+- Conditional uses `if..else` statements in implementation, how cool is that? :smile:
+- Conditional relies on closures to return non closure values passed to then.
+> In the future release it will be optional for `then` and `else` method
+- This project at the initial phase is a proof of concept so performance and best practices (?)
+> It might be part of something great in the future (especially as a Laravel helper) how cool that would be!
+
 ## Contributions
 
 - More tests are needed
+- Issues have been opened
 - Needs to review PR about adding `elseIf()` method
 - How about those static properties, any idea how to reduce the number of static properties used?
+- Performance optimization (?)
 
 ## Development
 
-For new feature, checkout with prefix `feature` e.g `feature/add-auto-deloy`
+For new feature, checkout with prefix `feature/#issueid` e.g `feature/#100-add-auto-deloy`
 
+- 
 - Clone this repository
 - run `sh dockerizer.sh` or `bash dockerizer.sh`
 - execute into the docker environment with `docker-compose exec conditional sh` (`sh` can be another bash)
