@@ -4,10 +4,11 @@
 
 <p align="center">
 <a href="https://travis-ci.com/omitobi/conditional"> <img src="https://travis-ci.com/omitobi/conditional.svg?branch=master" alt="Build Status"/></a>
-<a href="https://packagist.org/packages/omitobisam/conditional"> <img src="https://poser.pugx.org/omitobisam/conditional/version" alt="Latest Stable Version"/></a>
+<a href="https://packagist.org/packages/omitobisam/conditional"> <img src="https://poser.pugx.org/omitobisam/conditional/v/stable" alt="Latest Stable Version"/></a>
 <a href="https://packagist.org/packages/omitobisam/conditional"> <img src="https://poser.pugx.org/omitobisam/conditional/downloads" alt="Total Downloads"/></a>
 <a href="https://packagist.org/packages/omitobisam/conditional"> <img src="https://poser.pugx.org/omitobisam/conditional/v/unstable" alt="Latest Unstable Version"/></a>
 <a href="https://packagist.org/packages/omitobisam/conditional"> <img src="https://poser.pugx.org/omitobisam/conditional/d/monthly" alt="Latest Monthly Downloads"/></a>
+  <a href="https://packagist.org/packages/omitobisam/conditional"> <img src="https://poser.pugx.org/omitobisam/conditional/license" alt="License"/></a>
 </p>
 
 ## About Conditional
