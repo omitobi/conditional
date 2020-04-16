@@ -12,11 +12,17 @@
 </p>
 
 ## About Conditional
+
 A (optional but) fluent helper for object-oriented style of if-else statements.
 
 It helps you construct conditionals as you speak it object Oriented way.
 
 > Some use cases are not yet covered so you can default to `if() else {}` statement.
+
+## Minimum Requirement
+
+- PHP 7.4
+- (Older version compatibility to arrive with upcoming version of this package)
 
 ## Installation
 
@@ -29,7 +35,7 @@ or add to the require object of `composer.json` file with the version number:
 ```json
 {
   "require": {
-    "omitobisam/conditional": "v1.0-alpha" 
+    "omitobisam/conditional": "1.0" 
   }
 }
 ```
@@ -124,7 +130,7 @@ conditional(isset($data))
 
 ## Caveats (or Awareness)
 
-- As at version v1.0, Calling `if()` method returns an instance of Condtional, so do not call it twice on the same instance for example:
+- As at version 1.0, Calling `if()` method returns an instance of Condtional, so do not call it twice on the same instance for example:
 
 ```php
 // This is Wrong!
