@@ -35,7 +35,7 @@ or add to the require object of `composer.json` file with the version number:
 ```json
 {
   "require": {
-    "omitobisam/conditional": "1.0" 
+    "omitobisam/conditional": "^1.0" 
   }
 }
 ```
