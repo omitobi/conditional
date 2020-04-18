@@ -55,11 +55,16 @@ class Conditional
             );
         }
 
-        if (!$this->canBeCalled($action)) {
-            $action = fn() => $action;
-        }
-
         if (self::$truthy) {
+
+            if ($this->isExceptionClass($action)) {
+                throw $action;
+            }
+
+            if (!$this->canBeCalled($action)) {
+                $action = fn() => $action;
+            }
+
             self::$finalValue = $action();
         }
 
@@ -68,6 +73,11 @@ class Conditional
         self::$conditionsExists = false;
 
         return $this;
+    }
+
+    private function isExceptionClass($action)
+    {
+        return is_a($action, \Exception::class);
     }
 
     public function value()
