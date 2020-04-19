@@ -107,6 +107,16 @@ class ConditionalTest extends TestCase
         $this->assertNotSame($instanceOne, $instanceTwo);
     }
 
+    public function testThenAndElseAcceptsException()
+    {
+        $this->expectException(TestException::class);
+        $this->expectExceptionMessage('This is still wrong');
+
+        \conditional('foo' === 'bar')
+            ->then(new TestException('This is wrong'))
+            ->else(new TestException('This is still wrong'));
+    }
+
     private function dump(...$expression)
     {
         var_dump($expression);
@@ -124,5 +134,8 @@ class Invokable {
     {
         return $value ?: 1;
     }
+}
+
+class TestException extends \Exception {
 
 }

@@ -112,6 +112,14 @@ $value = Conditional::if(fn() => 'a' === 1) // or conditional(fn() => 1 + 1)
 // Do something with $value
 ```
 
+You are also allowed to throw exception based on the condition like so:
+
+```php
+ \conditional('foo' === 'bar')
+    ->then('foo === bar')
+    ->else(new TestException('Foo is not the same as bar'));  //this exception is thrown
+```
+
 ### Coming soon
 
 `elseIf()` method of Conditional like so:
