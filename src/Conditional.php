@@ -98,7 +98,7 @@ class Conditional
 
     public function elseIf($condition)
     {
-        if (! self::$thenCalled || self::$elseCalled || self::$elseIfCalled) {
+        if (!$this->allowElseIf()) {
             throw new InvalidConditionOrderException(
                 'At least then() condition must be called before calling elseIf'
             );
@@ -127,6 +127,13 @@ class Conditional
     public function value()
     {
         return self::$finalValue;
+    }
+
+    private function allowElseIf()
+    {
+        return self::$thenCalled &&
+            !self::$conditionsExists &&
+            !self::$elseCalled;
     }
 
     private function allowThen()
