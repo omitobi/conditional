@@ -138,17 +138,29 @@ conditional(isset($data))
     ->else(2);
 ```
 
-### Coming Soon
-`if()` method of Conditional like so:
+`elseIf()` can be called multiple times on an instance:
 
 ```php
-Conditional::if(function ($value1, $value2, $value3) {
-    return $value1 === 1 && $value2 === 2 && $value3 == 4;
-})
-    ->then(fn() => doThis())
+$value = Conditional::if(false)
 
-    ->else(2);
+    ->then('a')
+
+    ->elseIf('b' == 1) //first one
+
+    ->then('b')
+
+    ->elseIf('b' !== 2) //another
+
+    ->then('2')
+
+    ->else(1)
+
+    ->value();
+
+// $value is '2'
 ```
+
+### Coming Soon
 
 `If()` and `elseIf()` statement accepting a default value when no condition is met and `else()` is not called like so:
 
@@ -163,6 +175,10 @@ Conditional::if(is_array('a'), 'ninja') //default value is ninja
     
     ->value(); // 'ninja' is returned :scream:
 ```
+
+Multiple conditional check like `a && b && c && d` or `a || b || c ||...` syntax
+
+- Help wanted for this
 
 ## Caveats (or Awareness)
 

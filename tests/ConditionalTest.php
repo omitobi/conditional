@@ -184,6 +184,27 @@ class ConditionalTest extends TestCase
             ->value();
     }
 
+    public function testElseIfCanBeCalledMultipleTimesInAnInstance()
+    {
+        $value = Conditional::if(false)
+
+            ->then('a')
+
+            ->elseIf('b' == 1)
+
+            ->then('b')
+
+            ->elseIf('b' !== 2)
+
+            ->then('2')
+
+            ->else(1)
+
+            ->value();
+
+        $this->assertEquals($value, 2);
+    }
+
 //    public function testIfCannotBeCalledAfterElseIf()
 //    {
 //        $this->expectException(InvalidConditionOrderException::class);
