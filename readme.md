@@ -35,7 +35,7 @@ or add to the require object of `composer.json` file with the version number:
 ```json
 {
   "require": {
-    "omitobisam/conditional": "^1.0" 
+    "omitobisam/conditional": "^1.1" 
   }
 }
 ```
@@ -116,11 +116,13 @@ You are also allowed to throw exception based on the condition like so:
 
 ```php
  \conditional('foo' === 'bar')
+
     ->then('foo === bar')
+
     ->else(new TestException('Foo is not the same as bar'));  //this exception is thrown
 ```
 
-### Coming soon
+### Newly released
 
 `elseIf()` method of Conditional like so:
 
@@ -136,9 +138,35 @@ conditional(isset($data))
     ->else(2);
 ```
 
+### Coming Soon
+`if()` method of Conditional like so:
+
+```php
+Conditional::if(function ($value1, $value2, $value3) {
+    return $value1 === 1 && $value2 === 2 && $value3 == 4;
+})
+    ->then(fn() => doThis())
+
+    ->else(2);
+```
+
+`If()` and `elseIf()` statement accepting a default value when no condition is met and `else()` is not called like so:
+
+```php
+Conditional::if(is_array('a'), 'ninja') //default value is ninja
+
+    ->then(fn() => doThis())
+
+    ->elseIf(is_int(""))
+
+    ->then(fn() => doThat())
+    
+    ->value(); // 'ninja' is returned :scream:
+```
+
 ## Caveats (or Awareness)
 
-- As at version 1.0, Calling `if()` method returns an instance of Condtional, so do not call it twice on the same instance for example:
+- As at version 1.x, Calling `if()` method returns an instance of Condtional, so do not call it twice on the same instance for example:
 
 ```php
 // This is Wrong!
