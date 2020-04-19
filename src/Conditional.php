@@ -119,6 +119,11 @@ class Conditional
         return $this;
     }
 
+    private function isExceptionClass($action)
+    {
+        return is_a($action, \Exception::class);
+    }
+
     public function value()
     {
         return self::$finalValue;
@@ -140,11 +145,6 @@ class Conditional
     private function toggleTruthy()
     {
         self::$truthy = !self::$truthy;
-    }
-
-    private function isExceptionClass($action)
-    {
-        return is_a($action, \Exception::class);
     }
 
     public function __destruct()
