@@ -117,6 +117,86 @@ class ConditionalTest extends TestCase
             ->else(new TestException('This is still wrong'));
     }
 
+    public function testElseAfterElseIfConditional()
+    {
+        $value = Conditional::if('1' === true)
+            ->then(1)
+            ->elseIf('1' === false)
+            ->then(3)
+            ->else(4)
+            ->value();
+
+        $this->assertEquals(4, $value);
+    }
+
+    public function testElseIfCannotBeCalledBeforeThen()
+    {
+        $condtional = new Conditional();
+
+        $this->expectException(InvalidConditionOrderException::class);
+
+        $this->expectExceptionMessage('At least then() condition must be called before calling elseIf');
+
+        $condtional->elseIf(true);
+    }
+
+    public function testElseIfCannotBeCalledAfterElse()
+    {
+        $this->expectException(InvalidConditionOrderException::class);
+
+        $this->expectExceptionMessage('At least then() condition must be called before calling elseIf');
+
+        Conditional::if('1' === true)
+            ->then(1)
+            ->elseIf('1' === false)
+            ->then(3)
+            ->else(5)
+            ->elseIf(true)
+            ->then('abc');
+    }
+
+    public function testElseIfBuildsUpAnotherConditional()
+    {
+        $conditional = Conditional::if(false);
+
+        $conditional2 = $conditional->then(1)
+            ->elseIf(true);
+
+        $this->assertEquals($conditional, $conditional2);
+        $this->assertSame($conditional, $conditional2);
+
+        $value = $conditional2->then(3)
+            ->value();
+
+        $this->assertEquals(3, $value);
+    }
+
+    public function testElseIfCannotBeChainedWithElseIf()
+    {
+        $this->expectException(InvalidConditionOrderException::class);
+
+        $this->expectExceptionMessage('At least then() condition must be called before calling elseIf');
+
+        Conditional::if('1' === true)
+            ->then(1)
+            ->elseIf('1' === false)
+            ->elseIf(1 === '1')
+            ->value();
+    }
+
+//    public function testIfCannotBeCalledAfterElseIf()
+//    {
+//        $this->expectException(InvalidConditionOrderException::class);
+//
+//        $this->expectExceptionMessage('At least then() condition must be called before calling elseIf');
+//
+//        Conditional::if('1' === true)
+//            ->then(1)
+//            ->elseIf('1' === false)
+//            ->if(1 === '1')
+//            ->value();
+//    }
+
     private function dump(...$expression)
     {
         var_dump($expression);
