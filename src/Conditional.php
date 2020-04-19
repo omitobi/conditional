@@ -30,8 +30,6 @@ class Conditional
 
     public static function if($condition)
     {
-        //todo.flash if should not be callable once any other condition is called
-
         self::setTruthy($condition);
 
         self::$conditionsExists = true;
@@ -54,7 +52,7 @@ class Conditional
     {
         if (!self::$thenCalled) {
             throw new InvalidConditionOrderException(
-                'you need to call then() condition before calling else()'
+                'then() must be called before calling else()'
             );
         }
 
@@ -71,18 +69,22 @@ class Conditional
     {
         if (!$this->allowThen()) {
             throw new InvalidConditionOrderException(
-                'you need to make at least one condition before calling then()'
+                'A condition must be called before calling then()'
             );
         }
 
-        self::$conditionsExists = false;
-
-        if (!$this->canBeCalled($action)) {
-            $action = fn() => $action;
-        }
-
         if (self::$truthy) {
+
+            if ($this->isExceptionClass($action)) {
+                throw $action;
+            }
+
+            if (!$this->canBeCalled($action)) {
+                $action = fn() => $action;
+            }
+
             self::$finalValue = $action();
+
             self::$finalValueChanged = true;
         }
 
@@ -96,9 +98,9 @@ class Conditional
 
     public function elseIf($condition)
     {
-        if (! self::$thenCalled) {
+        if (! self::$thenCalled || self::$elseCalled || self::$elseIfCalled) {
             throw new InvalidConditionOrderException(
-                'you need to call then() condition before calling elseIf'
+                'At least then() condition must be called before calling elseIf'
             );
         }
 
@@ -138,6 +140,11 @@ class Conditional
     private function toggleTruthy()
     {
         self::$truthy = !self::$truthy;
+    }
+
+    private function isExceptionClass($action)
+    {
+        return is_a($action, \Exception::class);
     }
 
     public function __destruct()
