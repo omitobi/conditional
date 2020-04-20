@@ -55,8 +55,7 @@ class ConditionalTest extends TestCase
 
         $result = Conditional::if($value === $firstResponse)
             ->then($firstResponse)
-            ->else($secondResponse)
-            ->value();
+            ->else($secondResponse);
 
         $this->assertEquals($value, $result);
     }
@@ -65,8 +64,7 @@ class ConditionalTest extends TestCase
     {
         $result = Conditional::if(fn() => true)
             ->then(fn() => fn() => 'fn 1')
-            ->else(fn() => fn() => 'fn 2')
-            ->value();
+            ->else(fn() => fn() => 'fn 2');
 
         $this->assertInstanceOf(Closure::class, $result);
     }
@@ -83,8 +81,7 @@ class ConditionalTest extends TestCase
 
         $result1 = Conditional::if($invokable() === 'Invocable')
             ->then($invokable)
-            ->else($invokable(1))
-            ->value();
+            ->else($invokable(1));
 
         $result2 = Conditional::if(strlen('abcd') === 4)
             ->then(new Invokable())
@@ -123,8 +120,7 @@ class ConditionalTest extends TestCase
             ->then(1)
             ->elseIf('1' === false)
             ->then(3)
-            ->else(4)
-            ->value();
+            ->else(4);
 
         $this->assertEquals(4, $value);
     }
@@ -147,10 +143,8 @@ class ConditionalTest extends TestCase
         $this->expectExceptionMessage('At least then() condition must be called before calling elseIf');
 
         Conditional::if('1' === true)
-            ->then(1)
             ->elseIf('1' === false)
             ->then(3)
-            ->else(5)
             ->elseIf(true)
             ->then('abc');
     }
@@ -198,9 +192,7 @@ class ConditionalTest extends TestCase
 
             ->then('2')
 
-            ->else(1)
-
-            ->value();
+            ->else(1);
 
         $this->assertEquals($value, 2);
     }
@@ -214,7 +206,8 @@ class ConditionalTest extends TestCase
         $this->assertSame(
             conditional(1 === 2, '2')
                 ->elseIf(is_string('a'))
-                ->then('a')->value(),
+                ->then('a')
+                ->value(),
             'a'
         );
     }

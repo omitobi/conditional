@@ -20,7 +20,7 @@ if (!function_exists('conditional')) {
         }
 
         if (func_num_args() === 3) {
-            return $conditional->then($then)->else($else)->value();
+            return $conditional->then($then)->else($else);
         }
 
         return $conditional;
