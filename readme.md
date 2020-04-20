@@ -65,6 +65,23 @@ conditional(isset($data))
     ->else(fn() => doThat());
 ```
 
+:tada: Now like a tenary operator. Conditional at version 1.2 `else()` immediately returns the value of the last truthy execution:
+
+```php
+conditional('1' === 'a', 1, 2); //returns 2 - without calling ->value()
+
+conditional(false, 1)
+
+  ->else(2); //returns 2 - without calling ->value()
+
+// Of course the normal one
+conditional(false)
+
+  ->then(1)
+
+  ->else(2); //returns 2
+```
+
 You can also evaluate a closure call on the conditional `if` method:
 
 ```php
@@ -81,9 +98,8 @@ You use `value()` method to get the values either the result of the closure pass
 ```php
 use Conditional\Conditional;
 
-$value = Conditional::if(fn() => 'a' === 1) // or conditional(fn() => 'a' == 1)
+$value = Conditional::if(fn() => 'a' !== 1) // or conditional(fn() => 'a' !== 1)
     ->then(1)
-    ->else(2)
     ->value(); // returns 2 (because a !== 1)
 
 //do something with $value
@@ -106,8 +122,7 @@ $invokableClass = new Invokable();
 
 $value = Conditional::if(fn() => 'a' === 1) // or conditional(fn() => 1 + 1)
     ->then(1)
-    ->else($invokableClass) // 
-    ->value(); //Value returns 'I was Invoked'
+    ->else($invokableClass); //Value returns 'I was Invoked'
 
 // Do something with $value
 ```
@@ -153,9 +168,7 @@ $value = Conditional::if(false)
 
     ->then('2')
 
-    ->else(1)
-
-    ->value();
+    ->else(1);
 
 // $value is '2'
 ```
@@ -203,7 +216,6 @@ Conditional::if(true)
 
 - More tests are needed
 - Issues have been opened
-- Needs to review PR about adding `elseIf()` method
 - How about those static properties, any idea how to reduce the number of static properties used?
 - Performance optimization (?)
 

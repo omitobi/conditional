@@ -7,10 +7,22 @@ if (!function_exists('conditional')) {
      * New up an instance of readied Conditional
      *
      * @param $condition
+     * @param mixed $then
+     * @param mixed $else
      * @return Conditional
      */
-    function conditional($condition)
+    function conditional($condition, $then = null, $else = null)
     {
-        return Conditional::if($condition);
+        $conditional = Conditional::if($condition);
+
+        if (func_num_args() === 2) {
+            return $conditional->then($then);
+        }
+
+        if (func_num_args() === 3) {
+            return $conditional->then($then)->else($else);
+        }
+
+        return $conditional;
     }
 }

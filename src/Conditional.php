@@ -62,7 +62,7 @@ class Conditional
 
         self::$elseCalled = true;
 
-        return $this->then($action);
+        return $this->then($action)->value();
     }
 
     public function then($action)
