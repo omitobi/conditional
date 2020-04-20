@@ -207,11 +207,13 @@ class ConditionalTest extends TestCase
 
     public function testConditionalHelperFunctionAcceptsThenAndElseValues()
     {
+        $this->assertSame('3', conditional(1 === '1', '2', '3'));
+
         $this->assertSame('2', conditional(1 == '1', '2')->value());
-        $this->assertSame('3', conditional(1 === '1', '2', '3')->value());
 
         $this->assertSame(
-            conditional(1 === 2, '2')->elseIf(is_string('a'))
+            conditional(1 === 2, '2')
+                ->elseIf(is_string('a'))
                 ->then('a')->value(),
             'a'
         );

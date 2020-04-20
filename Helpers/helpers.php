@@ -16,11 +16,11 @@ if (!function_exists('conditional')) {
         $conditional = Conditional::if($condition);
 
         if (func_num_args() === 2) {
-            $conditional->then($then);
+            return $conditional->then($then);
         }
 
         if (func_num_args() === 3) {
-            $conditional->then($then)->else($else);
+            return $conditional->then($then)->else($else)->value();
         }
 
         return $conditional;
