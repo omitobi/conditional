@@ -81,9 +81,8 @@ You use `value()` method to get the values either the result of the closure pass
 ```php
 use Conditional\Conditional;
 
-$value = Conditional::if(fn() => 'a' === 1) // or conditional(fn() => 'a' == 1)
+$value = Conditional::if(fn() => 'a' !== 1) // or conditional(fn() => 'a' !== 1)
     ->then(1)
-    ->else(2)
     ->value(); // returns 2 (because a !== 1)
 
 //do something with $value
@@ -106,8 +105,7 @@ $invokableClass = new Invokable();
 
 $value = Conditional::if(fn() => 'a' === 1) // or conditional(fn() => 1 + 1)
     ->then(1)
-    ->else($invokableClass) // 
-    ->value(); //Value returns 'I was Invoked'
+    ->else($invokableClass); //Value returns 'I was Invoked'
 
 // Do something with $value
 ```
@@ -153,9 +151,7 @@ $value = Conditional::if(false)
 
     ->then('2')
 
-    ->else(1)
-
-    ->value();
+    ->else(1);
 
 // $value is '2'
 ```
