@@ -65,6 +65,23 @@ conditional(isset($data))
     ->else(fn() => doThat());
 ```
 
+:tada: Now like a tenary operator. Conditional at version 1.2 `else()` immediately returns the value of the last truthy execution:
+
+```php
+conditional('1' === 'a', 1, 2); //returns 2 - without calling ->value()
+
+conditional(false, 1)
+
+  ->else(2); //returns 2 - without calling ->value()
+
+// Of course the normal one
+conditional(false)
+
+  ->then(1)
+
+  ->else(2); //returns 2
+```
+
 You can also evaluate a closure call on the conditional `if` method:
 
 ```php
