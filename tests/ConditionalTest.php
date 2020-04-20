@@ -205,6 +205,18 @@ class ConditionalTest extends TestCase
         $this->assertEquals($value, 2);
     }
 
+    public function testConditionalHelperFunctionAcceptsThenAndElseValues()
+    {
+        $this->assertSame('2', conditional(1 == '1', '2')->value());
+        $this->assertSame('3', conditional(1 === '1', '2', '3')->value());
+
+        $this->assertSame(
+            conditional(1 === 2, '2')->elseIf(is_string('a'))
+                ->then('a')->value(),
+            'a'
+        );
+    }
+
 //    public function testIfCannotBeCalledAfterElseIf()
 //    {
 //        $this->expectException(InvalidConditionOrderException::class);
