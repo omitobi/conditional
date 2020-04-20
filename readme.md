@@ -216,7 +216,6 @@ Conditional::if(true)
 
 - More tests are needed
 - Issues have been opened
-- Needs to review PR about adding `elseIf()` method
 - How about those static properties, any idea how to reduce the number of static properties used?
 - Performance optimization (?)
 
