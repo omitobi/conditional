@@ -232,3 +232,15 @@ For new feature, checkout with prefix `feature/#issueid` e.g `feature/#100-add-a
 ## Licence
 
 MIT (see LICENCE file)
+
+## Additional Information
+
+Be aware that this package is part of a series of "The Proof of Concept" so best practices might not be the top priority.
+
+See other packages in this series here:
+
+https://github.com/transprime-research/piper [A functional PHP pipe in object-oriented way]
+https://github.com/transprime-research/arrayed [A smart PHP array class object]
+https://github.com/transprime-research/attempt [A smart PHP try...catch statement]
+https://github.com/omitobi/corbonate [A smart Carbon + Collection package]
+https://github.com/omitobi/laravel-habitue [Jsonable Http Request(er) package with Collections response]
