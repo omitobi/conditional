@@ -42,8 +42,12 @@ class ConditionalTest extends TestCase
         $secondResponse = 2;
 
         Conditional::if($firstResponse === $secondResponse)
-            ->then(fn() => $this->assertEquals($firstResponse, $secondResponse))
-            ->else(fn() => $this->assertNotEquals($firstResponse, $secondResponse));
+            ->then(function () use ($firstResponse, $secondResponse) {
+                return $this->assertEquals($firstResponse, $secondResponse);
+            })
+            ->else(function () use ($firstResponse, $secondResponse) {
+                return $this->assertNotEquals($firstResponse, $secondResponse);
+            });
     }
 
     public function testThatValueIsReceived()
@@ -62,9 +66,19 @@ class ConditionalTest extends TestCase
 
     public function testGetFunctionValue()
     {
-        $result = Conditional::if(fn() => true)
-            ->then(fn() => fn() => 'fn 1')
-            ->else(fn() => fn() => 'fn 2');
+        $result = Conditional::if(function () {
+            return true;
+        })
+            ->then(function () {
+                return function () {
+                    return 'fn 1';
+                };
+            })
+            ->else(function () {
+                return function () {
+                    return 'fn 2';
+                };
+            });
 
         $this->assertInstanceOf(Closure::class, $result);
     }

@@ -85,7 +85,9 @@ class Conditional
             }
 
             if (!$this->canBeCalled($action)) {
-                $action = fn() => $action;
+                $action = function () use ($action) {
+                    return $action;
+                };
             }
 
             $this->finalValue = $action();
