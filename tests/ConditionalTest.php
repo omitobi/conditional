@@ -181,17 +181,11 @@ class ConditionalTest extends TestCase
     public function testElseIfCanBeCalledMultipleTimesInAnInstance()
     {
         $value = Conditional::if(false)
-
             ->then('a')
-
             ->elseIf('b' == 1)
-
             ->then('b')
-
             ->elseIf('b' !== 2)
-
             ->then('2')
-
             ->else(1);
 
         $this->assertEquals($value, 2);
@@ -209,6 +203,26 @@ class ConditionalTest extends TestCase
                 ->then('a')
                 ->value(),
             'a'
+        );
+    }
+
+    public function testConditionalTwice()
+    {
+        $conditionally = function ($condition) {
+            $conditional = Conditional::if($condition);
+
+            Conditional::if(func_num_args() === 2)
+                ->then('1')
+                ->else('2');
+
+            return $conditional;
+        };
+
+        $this->assertEquals(
+            'b',
+            $conditionally(1 === 2)
+                ->then('a')
+                ->else('b')
         );
     }
 
@@ -236,7 +250,8 @@ class ConditionalTest extends TestCase
     }
 }
 
-class Invokable {
+class Invokable
+{
 
     public function __invoke($value = '')
     {
@@ -244,6 +259,7 @@ class Invokable {
     }
 }
 
-class TestException extends \Exception {
+class TestException extends \Exception
+{
 
 }
