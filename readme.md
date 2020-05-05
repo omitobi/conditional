@@ -21,8 +21,8 @@ It helps you construct conditionals as you speak it object Oriented way.
 
 ## Minimum Requirement
 
-- PHP 7.4
-- (Older version compatibility to arrive with upcoming version of this package)
+- PHP 7.2 +
+- Composer
 
 ## Installation
 
@@ -35,7 +35,7 @@ or add to the require object of `composer.json` file with the version number:
 ```json
 {
   "require": {
-    "omitobisam/conditional": "^1.1" 
+    "omitobisam/conditional": "^1.2" 
   }
 }
 ```
