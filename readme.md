@@ -56,6 +56,7 @@ Conditional::if(is_null($data))
     ->else(fn() => doThat());
 
 ```
+> PS: You can still use the old `function() { return v; }`, `fn()` is the new short arrow function in PHP 7.4+ See: https://www.php.net/manual/en/functions.arrow.php
 
 Conditional also comes with a helper function called `conditional()` and its used like so:
 
