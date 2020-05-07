@@ -21,8 +21,8 @@ It helps you construct conditionals as you speak it object Oriented way.
 
 ## Minimum Requirement
 
-- PHP 7.4
-- (Older version compatibility to arrive with upcoming version of this package)
+- PHP 7.2 +
+- Composer
 
 ## Installation
 
@@ -35,7 +35,7 @@ or add to the require object of `composer.json` file with the version number:
 ```json
 {
   "require": {
-    "omitobisam/conditional": "^1.1" 
+    "omitobisam/conditional": "^1.2" 
   }
 }
 ```
@@ -56,6 +56,7 @@ Conditional::if(is_null($data))
     ->else(fn() => doThat());
 
 ```
+> PS: You can still use the old `function() { return v; }`, `fn()` is the new short arrow function in PHP 7.4+ See: https://www.php.net/manual/en/functions.arrow.php
 
 Conditional also comes with a helper function called `conditional()` and its used like so:
 
@@ -232,3 +233,15 @@ For new feature, checkout with prefix `feature/#issueid` e.g `feature/#100-add-a
 ## Licence
 
 MIT (see LICENCE file)
+
+## Additional Information
+
+Be aware that this package is part of a series of "The Proof of Concept".
+
+See other packages in this series here:
+
+- https://github.com/transprime-research/piper [A functional PHP pipe in object-oriented way]
+- https://github.com/transprime-research/arrayed [A smart PHP array class object-oriented way]
+- https://github.com/transprime-research/attempt [A smart PHP try...catch statement]
+- https://github.com/omitobi/carbonate [A smart Carbon + Collection package]
+- https://github.com/omitobi/laravel-habitue [Jsonable Http Request(er) package with Collections response]

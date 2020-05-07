@@ -42,8 +42,12 @@ class ConditionalTest extends TestCase
         $secondResponse = 2;
 
         Conditional::if($firstResponse === $secondResponse)
-            ->then(fn() => $this->assertEquals($firstResponse, $secondResponse))
-            ->else(fn() => $this->assertNotEquals($firstResponse, $secondResponse));
+            ->then(function () use ($firstResponse, $secondResponse) {
+                return $this->assertEquals($firstResponse, $secondResponse);
+            })
+            ->else(function () use ($firstResponse, $secondResponse) {
+                return $this->assertNotEquals($firstResponse, $secondResponse);
+            });
     }
 
     public function testThatValueIsReceived()
@@ -62,9 +66,19 @@ class ConditionalTest extends TestCase
 
     public function testGetFunctionValue()
     {
-        $result = Conditional::if(fn() => true)
-            ->then(fn() => fn() => 'fn 1')
-            ->else(fn() => fn() => 'fn 2');
+        $result = Conditional::if(function () {
+            return true;
+        })
+            ->then(function () {
+                return function () {
+                    return 'fn 1';
+                };
+            })
+            ->else(function () {
+                return function () {
+                    return 'fn 2';
+                };
+            });
 
         $this->assertInstanceOf(Closure::class, $result);
     }
@@ -181,17 +195,11 @@ class ConditionalTest extends TestCase
     public function testElseIfCanBeCalledMultipleTimesInAnInstance()
     {
         $value = Conditional::if(false)
-
             ->then('a')
-
             ->elseIf('b' == 1)
-
             ->then('b')
-
             ->elseIf('b' !== 2)
-
             ->then('2')
-
             ->else(1);
 
         $this->assertEquals($value, 2);
@@ -209,6 +217,26 @@ class ConditionalTest extends TestCase
                 ->then('a')
                 ->value(),
             'a'
+        );
+    }
+
+    public function testConditionalTwice()
+    {
+        $conditionally = function ($condition) {
+            $conditional = Conditional::if($condition);
+
+            Conditional::if(func_num_args() === 2)
+                ->then('1')
+                ->else('2');
+
+            return $conditional;
+        };
+
+        $this->assertEquals(
+            'b',
+            $conditionally(1 === 2)
+                ->then('a')
+                ->else('b')
         );
     }
 
@@ -236,7 +264,8 @@ class ConditionalTest extends TestCase
     }
 }
 
-class Invokable {
+class Invokable
+{
 
     public function __invoke($value = '')
     {
@@ -244,6 +273,7 @@ class Invokable {
     }
 }
 
-class TestException extends \Exception {
+class TestException extends \Exception
+{
 
 }
