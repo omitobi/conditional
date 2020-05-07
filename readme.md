@@ -243,5 +243,5 @@ See other packages in this series here:
 - https://github.com/transprime-research/piper [A functional PHP pipe in object-oriented way]
 - https://github.com/transprime-research/arrayed [A smart PHP array class object-oriented way]
 - https://github.com/transprime-research/attempt [A smart PHP try...catch statement]
-- https://github.com/omitobi/corbonate [A smart Carbon + Collection package]
+- https://github.com/omitobi/carbonate [A smart Carbon + Collection package]
 - https://github.com/omitobi/laravel-habitue [Jsonable Http Request(er) package with Collections response]
