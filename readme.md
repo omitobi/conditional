@@ -13,34 +13,21 @@
 
 ## About Conditional
 
-A (optional but) fluent helper for object-oriented style of if-else statements.
+if-else statements in a cleaner and beautiful way.
 
-It helps you construct conditionals as you speak it object Oriented way.
-
-> Some use cases are not yet covered so you can default to `if() else {}` statement.
-
-## Minimum Requirement
-
-- PHP 7.2 +
-- Composer
+```php
+conditional(isset($data))
+    ->then(fn() => doThis())
+    ->else(fn() => doThat());
+```
 
 ## Installation
 
-Using composer:
-
 `composer require omitobisam/conditional`
 
-or add to the require object of `composer.json` file with the version number:
+## Minimum Requirement
 
-```json
-{
-  "require": {
-    "omitobisam/conditional": "^1.2" 
-  }
-}
-```
-
-After this run `composer update`
+- PHP >=7.4
 
 ## Usage
 
@@ -56,7 +43,6 @@ Conditional::if(is_null($data))
     ->else(fn() => doThat());
 
 ```
-> PS: You can still use the old `function() { return v; }`, `fn()` is the new short arrow function in PHP 7.4+ See: https://www.php.net/manual/en/functions.arrow.php
 
 Conditional also comes with a helper function called `conditional()` and its used like so:
 
@@ -207,11 +193,8 @@ Conditional::if(true)
     ->if('1'); // Don't do it except you intend to start a new and fresh if Conditional
 ```
 > See: tests/ConditionalTest::testEveryIfCallCreatesNewFreshInstance test. On the last line of that test, the two conditionals are not the same.
-- Conditional uses `if..else` statements in implementation, how cool is that? :smile:
 - Conditional relies on closures to return non closure values passed to then.
 > In the future release it will be optional for `then` and `else` method
-- This project at the initial phase is a proof of concept so performance and best practices (?)
-> It might be part of something great in the future (especially as a Laravel helper) how cool that would be!
 
 ## Contributions
 
@@ -222,7 +205,7 @@ Conditional::if(true)
 
 ## Development
 
-For new feature, checkout with prefix `feature/#issueid` e.g `feature/#100-add-auto-deloy`
+For new feature, checkout with prefix `feat-#issueid` e.g `feature-#100-add-auto-deloy`
 
 - 
 - Clone this repository
@@ -236,9 +219,7 @@ MIT (see LICENCE file)
 
 ## Additional Information
 
-Be aware that this package is part of a series of "The Proof of Concept".
-
-See other packages in this series here:
+Other related packages:
 
 - https://github.com/transprime-research/piper [A functional PHP pipe in object-oriented way]
 - https://github.com/transprime-research/arrayed [A smart PHP array class object-oriented way]
