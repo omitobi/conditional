@@ -37,5 +37,8 @@
     "psr-4": {
       "Conditional\\Tests\\": "tests/"
     }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
   }
 }
