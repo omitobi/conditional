@@ -19,10 +19,11 @@
     }
   ],
   "require": {
-    "php": ">=7.2"
+    "php": ">=7.4"
   },
   "require-dev": {
-    "phpunit/phpunit": "~8.0"
+    "phpunit/phpunit": "~8.0",
+    "symfony/var-dumper": "^6.4"
   },
   "autoload": {
     "psr-4": {
@@ -36,5 +37,8 @@
     "psr-4": {
       "Conditional\\Tests\\": "tests/"
     }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
   }
 }
