@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Conditional\Tests;
 
 use Closure;
@@ -43,10 +45,10 @@ class ConditionalTest extends TestCase
 
         Conditional::if($firstResponse === $secondResponse)
             ->then(function () use ($firstResponse, $secondResponse) {
-                return $this->assertEquals($firstResponse, $secondResponse);
+                $this->assertEquals($firstResponse, $secondResponse);
             })
             ->else(function () use ($firstResponse, $secondResponse) {
-                return $this->assertNotEquals($firstResponse, $secondResponse);
+                $this->assertNotEquals($firstResponse, $secondResponse);
             });
     }
 
@@ -253,15 +255,6 @@ class ConditionalTest extends TestCase
 //            ->value();
 //    }
 
-    private function dump(...$expression)
-    {
-        var_dump($expression);
-    }
-
-    private function dd()
-    {
-        die($this->dump(...func_get_args()));
-    }
 }
 
 class Invokable

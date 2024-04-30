@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Conditional;
 
 use Closure;
@@ -12,21 +14,21 @@ use Conditional\Exceptions\InvalidConditionOrderException;
  */
 class Conditional
 {
-    private $truthy = false;
+    private bool $truthy = false;
 
-    private $conditionsExists = false;
+    private bool $conditionsExists = false;
 
-    private $ifCalled = false;
+    private bool $ifCalled = false;
 
-    private $thenCalled = false;
+    private bool $thenCalled = false;
 
-    private $elseCalled = false;
+    private bool $elseCalled = false;
 
-    private $elseIfCalled = false;
+    private bool $elseIfCalled = false;
 
     private $finalValue;
 
-    private $finalValueChanged = null;
+    private ?bool $finalValueChanged = null;
 
     public static function if($condition)
     {
@@ -70,7 +72,7 @@ class Conditional
         return $this->then($action)->value();
     }
 
-    public function then($action)
+    public function then($action): self
     {
         if (!$this->allowThen()) {
             throw new InvalidConditionOrderException(
@@ -79,7 +81,6 @@ class Conditional
         }
 
         if ($this->truthy) {
-
             if ($this->isExceptionClass($action)) {
                 throw $action;
             }
@@ -103,7 +104,7 @@ class Conditional
     }
 
 
-    public function elseIf($condition)
+    public function elseIf($condition): self
     {
         if (!$this->allowElseIf()) {
             throw new InvalidConditionOrderException(
@@ -126,9 +127,9 @@ class Conditional
         return $this;
     }
 
-    private function isExceptionClass($action)
+    private function isExceptionClass($action): bool
     {
-        return is_a($action, \Exception::class);
+        return is_a($action, \Throwable::class);
     }
 
     public function value()
@@ -136,19 +137,19 @@ class Conditional
         return $this->finalValue;
     }
 
-    private function allowElseIf()
+    private function allowElseIf(): bool
     {
         return $this->thenCalled &&
             !$this->conditionsExists &&
             !$this->elseCalled;
     }
 
-    private function allowThen()
+    private function allowThen(): bool
     {
         return $this->conditionsExists && ($this->ifCalled || $this->elseIfCalled);
     }
 
-    protected function canBeCalled($value)
+    protected function canBeCalled($value): bool
     {
         return (
             (is_object($value) && method_exists($value, '__invoke')) ||
@@ -156,7 +157,7 @@ class Conditional
         );
     }
 
-    private function toggleTruthy()
+    private function toggleTruthy(): void
     {
         $this->truthy = !$this->truthy;
     }
